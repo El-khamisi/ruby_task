@@ -1,8 +1,19 @@
+require 'swagger_helper'
 
 RSpec.describe 'applications', type: :request do
   path '/applications' do
     post('create application') do
-      response(200, 'successful') do
+      tags 'applications'
+
+      consumes 'application/json'
+      parameter name: :name, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string, example: 'Name#Foo' }
+        }
+      }
+
+      response(201, 'successful') do
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -20,6 +31,8 @@ RSpec.describe 'applications', type: :request do
     parameter name: 'token', in: :path, type: :string, description: 'token'
 
     get('show application') do
+      tags 'applications'
+
       response(200, 'successful') do
         let(:token) { '123' }
 
@@ -33,8 +46,16 @@ RSpec.describe 'applications', type: :request do
         run_test!
       end
     end
-
     patch('update application') do
+      tags 'applications'
+      consumes 'application/json'
+      parameter name: :name, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string, example: 'Name#Foo' }
+        }
+      }
+
       response(200, 'successful') do
         let(:token) { '123' }
 
@@ -50,6 +71,15 @@ RSpec.describe 'applications', type: :request do
     end
 
     put('update application') do
+      tags 'applications'
+      consumes 'application/json'
+      parameter name: :name, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string, example: 'Name#Foo' }
+        }
+      }
+
       response(200, 'successful') do
         let(:token) { '123' }
 

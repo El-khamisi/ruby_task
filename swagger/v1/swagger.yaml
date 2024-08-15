@@ -7,9 +7,21 @@ paths:
   "/applications":
     post:
       summary: create application
+      tags:
+      - applications
+      parameters: []
       responses:
-        '200':
+        '201':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name#Foo
   "/applications/{token}":
     parameters:
     - name: token
@@ -20,18 +32,149 @@ paths:
         type: string
     get:
       summary: show application
+      tags:
+      - applications
       responses:
         '200':
           description: successful
     patch:
       summary: update application
+      tags:
+      - applications
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name#Foo
     put:
       summary: update application
+      tags:
+      - applications
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Name#Foo
+  "/applications/{application_token}/chats":
+    parameters:
+    - name: application_token
+      in: path
+      description: application_token
+      required: true
+      schema:
+        type: string
+    post:
+      summary: create chat
+      tags:
+      - chats
+      responses:
+        '201':
+          description: successful
+    get:
+      summary: list chats
+      tags:
+      - chats
+      responses:
+        '200':
+          description: successful
+  "/applications/{application_token}/chats/{number}":
+    parameters:
+    - name: application_token
+      in: path
+      description: application_token
+      required: true
+      schema:
+        type: string
+    - name: number
+      in: path
+      description: number
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show chat
+      tags:
+      - chats
+      responses:
+        '200':
+          description: successful
+  "/applications/{application_token}/chats/{chat_number}/messages/search":
+    parameters:
+    - name: application_token
+      in: path
+      description: application_token
+      required: true
+      schema:
+        type: string
+    - name: chat_number
+      in: path
+      description: chat_number
+      required: true
+      schema:
+        type: string
+    - name: q
+      in: query
+      description: search query
+      schema:
+        type: string
+    get:
+      summary: search message
+      responses:
+        '200':
+          description: successful
+  "/applications/{application_token}/chats/{chat_number}/messages":
+    parameters:
+    - name: application_token
+      in: path
+      description: application_token
+      required: true
+      schema:
+        type: string
+    - name: chat_number
+      in: path
+      description: chat_number
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list messages
+      tags:
+      - messages
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create message
+      tags:
+      - messages
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  example: example message body
 servers:
 - url: http://localhost:3000
