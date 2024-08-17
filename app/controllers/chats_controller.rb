@@ -1,14 +1,8 @@
 class ChatsController < ApplicationController
   def create
-    application = Application.find_by!(token: params[:application_token])
+    CreateChatsJob.perform_later(application_token: params[:application_token])
 
-    @chat = application.chats.new()
-
-    if @chat.save
-      render json:  @chat, except: [ :id, :application_id ], status: :created
-    else
-      render json: @chat.errors, status: :unprocessable_entity
-    end
+    render json: {}, status: :created
   end
 
   def show
