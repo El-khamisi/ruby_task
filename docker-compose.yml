@@ -4,12 +4,14 @@ services:
   app:
     build:
       dockerfile: Dockerfile
-    command: tail -f /dev/null
     environment:
+      SECRET_KEY_BASE: $2y$10$CxMGUGvmDKWlqQYzuFzoZeWMu/FJLOk4yRqPmhjCg2adNBNwbPgHS
       CHATS_DATABASE_PASSWORD: admin
       DB_HOST: db
       REDIS_URL: redis://redis:6379/1
       ELASTICSEARCH_URL: http://elastic:root@elasticsearch:9200
+    ports:
+      - 3000:3000
     volumes:
       - ../.:/home/vscode/workspace
     depends_on:
@@ -20,8 +22,6 @@ services:
     image: mysql:8.4
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
     ports:
       - 3306:3306
     volumes:

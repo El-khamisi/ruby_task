@@ -8,6 +8,8 @@ RSpec.describe 'messages', type: :request do
     parameter name: 'q', in: :query, type: :string, description: 'search query'
 
     get('search message') do
+      tags 'chats'
+
       response(200, 'successful') do
         let(:application_token) { '123' }
         let(:chat_number) { '123' }

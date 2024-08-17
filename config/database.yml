@@ -48,8 +48,9 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+
+# make production same as dev to be easy to-go
 production:
   <<: *default
   database: chats_production
-  username: root
-  password: <%= ENV["CHATS_DATABASE_PASSWORD"] %>
+  
