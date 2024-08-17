@@ -3,6 +3,8 @@ class Message < ApplicationRecord
 
   before_create :assign_number
 
+  searchkick callbacks: :async, text_middle: [ :body ]
+
   private
 
   def assign_number

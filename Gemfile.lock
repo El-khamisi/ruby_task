@@ -100,10 +100,24 @@ GEM
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
     drb (2.2.1)
+    elastic-transport (8.3.5)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.15.0)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.15.0)
+    elasticsearch-api (8.15.0)
+      multi_json
     error_highlight (0.6.0)
     erubi (1.13.0)
+    faraday (2.10.1)
+      faraday-net_http (>= 2.0, < 3.2)
+      logger
+    faraday-net_http (3.1.1)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashie (5.0.0)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -135,7 +149,10 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.0)
     msgpack (1.7.2)
+    multi_json (1.15.0)
     mysql2 (0.5.6)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.14)
       date
       net-protocol
@@ -199,6 +216,8 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
@@ -267,6 +286,9 @@ GEM
       rubocop-rails
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
+    searchkick (5.3.1)
+      activemodel (>= 6.1)
+      hashie
     securerandom (0.3.1)
     selenium-webdriver (4.23.0)
       base64 (~> 0.2)
@@ -274,6 +296,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sidekiq (7.3.1)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -294,6 +322,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    uri (0.13.0)
     useragent (0.16.10)
     web-console (4.2.1)
       actionview (>= 6.0.0)
@@ -317,6 +346,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  elasticsearch
   error_highlight (>= 0.4.0)
   importmap-rails
   jbuilder
@@ -326,8 +356,10 @@ DEPENDENCIES
   rspec-rails (~> 6.1)
   rswag
   rubocop-rails-omakase
+  searchkick
   securerandom
   selenium-webdriver
+  sidekiq
   sprockets-rails
   stimulus-rails
   turbo-rails

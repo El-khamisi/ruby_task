@@ -26,13 +26,20 @@ class MessagesController < ApplicationController
     end
 
     def search
-        @msgs = Message.joins(chat: [ :application ]).where(
-                application: { token: params[:application_token] },
-                chat: { number: params[:chat_number] },
-                  # messages: { body: params[:q] }
-                ).where("messages.body LIKE ?", "%#{params[:q]}%")
+        # @msgs = Message.joins(chat: [ :application ]).where(
+        #         application: { token: params[:application_token] },
+        #         chat: { number: params[:chat_number] },
+        #         ).where("messages.body LIKE ?", "%#{params[:q]}%")
 
+        @chat = Chat.select(:id).joins(:application).where(
+            application: { token: params[:application_token] },
+            number: params[:chat_number]
+            )
+        @eresults = Message.search(params[:q], fields: [ :body ], match: :text_middle,
+        where: { chat_id: @chat.ids[0] },
+        order: { created_at: :desc })
 
+        @msgs = @eresults.each { |e| e }
 
         render json: @msgs, except: [ :id, :chat_id ]
     end
