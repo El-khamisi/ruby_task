@@ -10,15 +10,14 @@ class ApplicationsController < ApplicationController
   end
 
   def update
-    @application = Application.find_by!(token: params[:token])
+    Application.transaction do
+      @application = Application.lock.find_by!(token: params[:token])
+      @application.name = params[:name]
 
-    filtered_params = params.permit(:name)
-
-    if @application.update(filtered_params)
-      render json: @application, except: [ :id ], status: :ok
-    else
-      render json: @application.errors, status: :unprocessable_entity
+      @application.save!
     end
+
+    render json: @application, except: [ :id ], status: :ok
   end
 
   def show
