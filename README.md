@@ -17,3 +17,6 @@ docker compose up
 ```
 - Endpoint will be found at `http://localhost:3000/api-docs/index.html`
 
+
+## Notes 
+> In addition to being easy to use, I have some prepared data to work with.
