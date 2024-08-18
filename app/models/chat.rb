@@ -1,7 +1,7 @@
 class Chat < ApplicationRecord
   belongs_to :application
 
-  belongs_to :application, counter_cache: true
+  belongs_to :application
   has_many :messages, dependent: :destroy
 
   before_create :assign_number

@@ -1,5 +1,7 @@
 class CreateChatsJob < ApplicationJob
   queue_as :default
+  retry_on Exception
+
 
   def perform(*args)
     application_token = args[0][:application_token]
@@ -7,6 +9,6 @@ class CreateChatsJob < ApplicationJob
 
     @chat = application.chats.new()
 
-    @chat.save
+    @chat.save!
   end
 end

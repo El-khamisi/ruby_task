@@ -1,19 +1,8 @@
 class MessagesController < ApplicationController
     def create
-        sen_params = params.permit(:body)
+        CreateMessagesJob.perform_later(application_token: params[:application_token], chat_number: params[:chat_number], msg_body: params[:body])
 
-        @chat = Chat.select(:id).joins(:application).where(
-                application: { token: params[:application_token] },
-                number: params[:chat_number]
-                )
-        @message = Message.new({ chat_id: @chat.ids[0], body: sen_params[:body] })
-
-
-        if @message.save
-            render json: @message, status: :created, except: [ :id, :chat_id ]
-        else
-            render json: @message.errors, status: :unprocessable_entity
-        end
+        render json: {}, status: :created
     end
 
     def index
