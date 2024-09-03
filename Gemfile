@@ -36,7 +36,7 @@ gem "bootsnap", require: false
 #
 gem "securerandom"
 
-gem "rspec-rails", "~> 6.1"
+gem "rspec-rails", "~> 7.0"
 gem "rswag"
 
 gem "searchkick"
